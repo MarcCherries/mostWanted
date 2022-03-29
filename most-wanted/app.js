@@ -79,7 +79,7 @@ function mainMenu(person, people) {
                     if (el.id===person.currentSpouse){
                         return el.firstName + " " + el.lastName;
                     }
-                    if(el.id===person.parents[0]){
+                    if(el.id===person.parents[0] || el.id===person.parents[1]){
                         return el.firstName + " " + el.lastName;
                     
                 }})
