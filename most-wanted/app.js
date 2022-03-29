@@ -75,29 +75,30 @@ function mainMenu(person, people) {
         case "family":
             function findPersonFamily(person, people){
                 // let personFamily=person.currentSpouse
-                let personRelated= people.map(function(el){
+                let personRelated= people.filter(function(el){
                     if (el.id===person.currentSpouse){
-                        return el.firstName + " " + el.lastName;
+                        return true;
                     }
                     if(el.id===person.parents[0] || el.id===person.parents[1]){
-                        return el.firstName + " " + el.lastName;
+                        return true;
                     
                 }})
             
-                return personRelated      
+                return personRelated;     
             }
 
 
             //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
-            alert(personFamily);
+            console.log(personFamily);
+            displayPeople(personFamily);
             break;
         case "descendants":
-            function findPersonDescendants(person,people){
-                let personOffspring=people.map(function(el){
+            function findPersonDescendants(person, people){
+                let personOffspring=people.filter(function(el){
                     if (el.parents[0]===person.id || el.parents[1]===person.id)
-                    return el.firstName + " " + el.lastName;
+                    return true
                 })
                 return personOffspring
             }
@@ -106,7 +107,7 @@ function mainMenu(person, people) {
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
-            alert(personDescendants);
+            displayPeople(personDescendants);
             break;
         case "restart":
             // Restart app() from the very beginning
@@ -222,16 +223,18 @@ function chars(input) {
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
-function searchByTrait(people, trait, traitValue){
+/*function searchByTrait(people){
+
+    let traitValue = promptFor("What is the person's last name?", chars);
     let byTrait = people.map(function(el){
-        if( el.trait === traitValue)
-        return el.trait
+        if( el.firstName === traitValue)
+        return el.firstName;
     })
 
     return byTrait
 
 }
-}
+
 /*the rooms are about to close but but I put this down just to get a visualization.  I think our end 
 funtion might look someyhing like this once we got trait and traitValue passed in as user imput
 */
