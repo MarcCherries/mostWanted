@@ -64,11 +64,8 @@ function mainMenu(person, people) {
     switch (displayOption) {
         case "info":
             function findPersonInfo(){
-            let personData = person.map(function(data){
-                return data;
-
-            
-            })
+            let personData = displayPerson(person[0])
+        
             return personData
             }
             // HINT: Look for a person-object stringifier utility function to help
@@ -76,6 +73,21 @@ function mainMenu(person, people) {
             alert(personInfo);
             break;
         case "family":
+            function findPersonFamily(person, people){
+                // let personFamily=person.currentSpouse
+                let personRelated= people.map(function(el){
+                    if (el.id===person.currentSpouse){
+                        return el.firstName + " " + el.lastName;
+                    }
+                    if(el.id===person.parents[0]){
+                        return el.firstName + " " + el.lastName;
+                    
+                }})
+            
+                return personRelated      
+            }
+
+
             //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
@@ -146,7 +158,15 @@ function displayPeople(people) {
 function displayPerson(person) {
     let personInfo = `First Name: ${person.firstName}\n`;
     personInfo += `Last Name: ${person.lastName}\n`;
-    //! TODO: finish getting the rest of the information to display //////////////////////////////////////////
+    personInfo += `Gender: ${person.gender}\n`;
+    personInfo += `Dob: ${person.dob}\n`;
+    personInfo += `Height: ${person.height}\n`;
+    personInfo += `Weight: ${person.weight}\n`;
+    personInfo += `Eye Color: ${person.eyeColor}\n`;
+    personInfo += `Occupation: ${person.occupation}\n`;
+    personInfo += `Parents: ${person.parents}\n`;
+    personInfo += `Current Spouse: ${person.currentSpouse}\n`;
+   
     alert(personInfo);
 }
 // End of displayPerson()
@@ -187,7 +207,7 @@ function yesNo(input) {
  * @returns {Boolean}           Default validation -- no logic yet.
  */
 function chars(input) {
-    return input.charAt(0).toUpperCase() + input.slice(1) ;
+    return true;
 }
 // End of chars()
 
