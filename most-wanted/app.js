@@ -63,7 +63,14 @@ function mainMenu(person, people) {
     // Routes our application based on the user's input
     switch (displayOption) {
         case "info":
-            //! TODO: Declare a findPersonInfo function //////////////////////////////////////////
+            function findPersonInfo(){
+            let personData = person.map(function(data){
+                return data;
+
+            
+            })
+            return personData
+            }
             // HINT: Look for a person-object stringifier utility function to help
             let personInfo = findPersonInfo(person[0]);
             alert(personInfo);
@@ -153,10 +160,13 @@ function displayPerson(person) {
  * @returns {String}            The valid string input retrieved from the user.
  */
 function promptFor(question, valid) {
+
     do {
-        var response = prompt(question).trim();
+        var response = prompt(question).trim()
+
     } while (!response || !valid(response));
-    return response;
+  
+    return response
 }
 // End of promptFor()
 
@@ -177,7 +187,7 @@ function yesNo(input) {
  * @returns {Boolean}           Default validation -- no logic yet.
  */
 function chars(input) {
-    return true; // Default validation only
+    return input.charAt(0).toUpperCase() + input.slice(1) ;
 }
 // End of chars()
 
