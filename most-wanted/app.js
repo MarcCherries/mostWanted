@@ -94,6 +94,15 @@ function mainMenu(person, people) {
             alert(personFamily);
             break;
         case "descendants":
+            function findPersonDescendants(person,people){
+                let personOffspring=people.map(function(el){
+                    if (el.parents[0]===person.id || el.parents[1]===person.id)
+                    return el.firstName + " " + el.lastName;
+                })
+                return personOffspring
+            }
+                
+
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
@@ -213,3 +222,16 @@ function chars(input) {
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
+function searchByTrait(people, trait, traitValue){
+    let byTrait = people.map(function(el){
+        if( el.trait === traitValue)
+        return el.trait
+    })
+
+    return byTrait
+
+}
+}
+/*the rooms are about to close but but I put this down just to get a visualization.  I think our end 
+funtion might look someyhing like this once we got trait and traitValue passed in as user imput
+*/
