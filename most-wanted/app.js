@@ -29,13 +29,13 @@ function app(people) {
             searchResults = searchByName(people);
             break;
         case "no":
-            let multiResult =  promptFor("Would you like to search by multiple traits? Press (yes) for yes ", yesNo);
+            let multiResult =  promptFor("Would you like to search by multiple traits? Press (yes) or (no) for single trait", yesNo);
             if (multiResult === 'yes'){
                 searchByMultipleTraits(people)
             }
-            else (multiResult === 'no')
+            else if(multiResult === 'no')
 
-                searchResults = searchByTrait(people);
+                searchByTrait(people);
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -84,12 +84,21 @@ function mainMenu(person, people) {
                     if (el.id===person.currentSpouse){
                         return true;
                     }
+                    if(!el.parents[0] || !person.parents[0]){
+                        return false;
+                    }
                     if(el.id===person.parents[0] || el.id===person.parents[1]){
                         return true;
                     }
-                    if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[0] === person.parents[1] || el.parents[1] === person.parents[1] ){
+                         if(!el.parents[1]){
+                        (el.parents[0] === person.parents[0] || el.parents[1]===person.parents[0]) 
                         return true;
-                }})
+                    }
+                    if(person.parents[0]){
+                        (el.parents[0] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[0] === person.parents[1])
+                        return true;
+                    }
+                })
 
             
                 return personRelated;     
@@ -360,3 +369,6 @@ let narrowedSearch = people.filter(function(el){
 )
 return narrowedSearch
 }
+
+
+
