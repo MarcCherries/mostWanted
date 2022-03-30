@@ -84,23 +84,36 @@ function mainMenu(person, people) {
                     if (el.id===person.currentSpouse){
                         return true;
                     }
-                    if(!el.parents[0] || !person.parents[0]){
+                    else if(!el.parents[0] || !person.parents[0]){
                         return false;
                     }
-                    if(el.id===person.parents[0] || el.id===person.parents[1]){
+                    else if(el.id===person.parents[0] || el.id===person.parents[1]){
                         return true;
                     }
-                         if(!el.parents[1]){
-                        (el.parents[0] === person.parents[0] || el.parents[1]===person.parents[0]) 
+                    else if(!el.parents[1] && !person.parents[1]){
+                        if(el.parents[0] === person.parents[0]){
+
+                        return true;
+                        }
+                    else if(person.parents[1] && !el.parent[1]){
+                        if(person.parents[0] === el.parents[0] || person.parents[1] === el.parents[0]){
+
+                        return true;
+                        }
+                    
+                    else if (el.parents[0] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[0] === person.parents[1]){
                         return true;
                     }
-                    if(person.parents[0]){
-                        (el.parents[0] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[0] === person.parents[1])
+                    else if(el.parents[1]  && !person.parents[1])
+                        if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[0]){
+
                         return true;
+                        }
                     }
+                }
                 })
 
-            
+                
                 return personRelated;     
             }
 
