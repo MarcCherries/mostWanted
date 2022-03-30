@@ -63,18 +63,18 @@ function mainMenu(person, people) {
     // Routes our application based on the user's input
     switch (displayOption) {
         case "info":
-            function findPersonInfo(){
-            let personData = displayPerson(person[0])
+            function findPersonInfo(person){
+            return person;
         
-            return personData
+            
             }
             // HINT: Look for a person-object stringifier utility function to help
             let personInfo = findPersonInfo(person[0]);
-            alert(personInfo);
+            displayPerson(personInfo);
             break;
         case "family":
             function findPersonFamily(person, people){
-                // let personFamily=person.currentSpouse
+        
                 let personRelated= people.filter(function(el){
                     if (el.id===person.currentSpouse){
                         return true;
@@ -91,7 +91,6 @@ function mainMenu(person, people) {
             //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
-            console.log(personFamily);
             displayPeople(personFamily);
             break;
         case "descendants":
@@ -130,12 +129,14 @@ function mainMenu(person, people) {
  * @returns {Array}             An array containing the person-object (or empty array if no match)
  */
 function searchByName(people) {
-    let firstName = promptFor("What is the person's first name?", chars);
-    let lastName = promptFor("What is the person's last name?", chars);
+    let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
+    let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
+    let newFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1)
+    let newLastName = lastName.charAt(0).toUpperCase() + lastName.slice(1)
 
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
-        if (person.firstName === firstName && person.lastName === lastName) {
+        if (person.firstName === newFirstName && person.lastName === newLastName) {
             return true;
         }
     });
@@ -238,3 +239,62 @@ function chars(input) {
 /*the rooms are about to close but but I put this down just to get a visualization.  I think our end 
 funtion might look someyhing like this once we got trait and traitValue passed in as user imput
 */
+function searchByTrait (people){
+    let traitChoice = promptFor("Which trait would you like to search by? (a) Gender (b) Eye Color (c) Height (cm) (d) Weight (lbs) ", chars)
+    let traitValue = promptFor("Which trait would you like? ", chars)
+    switch(traitChoice){
+        case "a": 
+            function searchByGender(people){
+            let genderSearch = people.filter(function(el){
+                if (el.gender === traitValue){
+                return true;
+             }})
+             return genderSearch;
+            }
+            let genderSearch = searchByGender(people)
+            displayPeople(genderSearch);
+            break;
+        case "b": 
+            function searchByEyeColor(people){
+            let eyeSearch = people.filter(function(el){
+                if (el.eyeColor === traitValue){
+                return true;
+             } })
+             return eyeSearch;
+            }
+            eyeColorSearch = searchByEyeColor(people)
+            displayPeople(eyeColorSearch);
+            break;
+            
+        case "c": 
+            function searchByHeight(people){
+            let heightSearch = people.filter(function(el){
+                if (el.height === traitValue){
+                return true;
+             } })
+             return heightSearch;
+            }
+            let heightSearch = searchByHeight(people)
+            displayPeople(heightSearch);
+            break;
+        case "d": 
+            function searchByWeight(people){
+            let weightSearch = people.filter(function(el){
+                if (el.weight === traitValue){
+                return true;
+             } })
+             return weightSearch;
+            }
+            let weightSearch = searchByWeight(people)
+            displayPeople(weightSearch);
+            break;
+    
+    
+
+  
+}
+
+        
+
+
+}
