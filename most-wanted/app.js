@@ -240,7 +240,7 @@ function chars(input) {
 funtion might look someyhing like this once we got trait and traitValue passed in as user imput
 */
 function searchByTrait (people){
-    let traitChoice = promptFor("Which trait would you like to search by? (a) Gender (b) Eye Color (c) Height (cm) (d) Weight (lbs) ", chars)
+    let traitChoice = promptFor("Which trait would you like to search by? (a) Gender (b) Eye Color (c) Height (cm) (d) Weight (lbs) (e) Search by multiple traits ", chars)
     let traitValue = promptFor("Which trait would you like? ", chars)
     switch(traitChoice){
         case "a": 
@@ -288,6 +288,17 @@ function searchByTrait (people){
             let weightSearch = searchByWeight(people)
             displayPeople(weightSearch);
             break;
+        case "e": 
+            function searchByMultipleTraits(people){
+            let weightSearch = people.filter(function(el){
+                if (el.weight === traitValue){
+                return true;
+             } })
+             return weightSearch;
+            }
+            let multiSearch = searchByMultipleTraits(people)
+            displayPeople(multiSearch);
+            break;
     
     
 
@@ -297,4 +308,15 @@ function searchByTrait (people){
         
 
 
+}
+function searchByMultipleTraits(people){
+    let multiTraitChoice = promptFor("Which traits would you like to search by?. (a) Gender (b) Eye Color (c) Height (cm) (d) Weight (lbs) (d)Date of Birth (dd/mm/yyyy), ", chars);
+    let multiTraitCheck = promptFor("Would you like to select more traits? select (y) or (n). ", chars);
+        if (multiTraitCheck === "y"){
+            let multiTraitResults = function searchTraitsUserSelections(people){
+                
+            
+            }
+        }
+    
 }
