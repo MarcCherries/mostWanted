@@ -29,8 +29,13 @@ function app(people) {
             searchResults = searchByName(people);
             break;
         case "no":
-            //! TODO: Declare a searchByTrait function //////////////////////////////////////////
-            searchResults = searchByTrait(people);
+            let multiResult =  promptFor("Would you like to search by multiple traits? Press (yes) for yes ", yesNo);
+            if (multiResult === 'yes'){
+                searchByMultipleTraits(people)
+            }
+            else (multiResult === 'no')
+
+                searchResults = searchByTrait(people);
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -81,8 +86,11 @@ function mainMenu(person, people) {
                     }
                     if(el.id===person.parents[0] || el.id===person.parents[1]){
                         return true;
-                    
+                    }
+                    if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[0] === person.parents[1] || el.parents[1] === person.parents[1] ){
+                        return true;
                 }})
+
             
                 return personRelated;     
             }
@@ -239,6 +247,7 @@ function chars(input) {
 /*the rooms are about to close but but I put this down just to get a visualization.  I think our end 
 funtion might look someyhing like this once we got trait and traitValue passed in as user imput
 */
+
 function searchByTrait (people){
     let traitChoice = promptFor("Which trait would you like to search by? (a) Gender (b) Eye Color (c) Height (cm) (d) Weight (lbs) (e) Search by multiple traits ", chars)
     let traitValue = promptFor("Which trait would you like? ", chars)
@@ -309,14 +318,45 @@ function searchByTrait (people){
 
 
 }
-function searchByMultipleTraits(people){
-    let multiTraitChoice = promptFor("Which traits would you like to search by?. (a) Gender (b) Eye Color (c) Height (cm) (d) Weight (lbs) (d)Date of Birth (dd/mm/yyyy), ", chars);
-    let multiTraitCheck = promptFor("Would you like to select more traits? select (y) or (n). ", chars);
-        if (multiTraitCheck === "y"){
-            let multiTraitResults = function searchTraitsUserSelections(people){
-                
-            
-            }
-        }
+
+ 
+       
+function multiTraitPrompt(){
+    let userInput = promptFor("Which gender would you like to select?  press enter to skip", chars);
+    let userInput2 = promptFor("Which eye color would you like to select? press n to skip. ", chars);
+    let userInput3 = promptFor("Which weight would you like to select?. press n to skip", chars);
+    let userInput4 = promptFor("Which height would you like to select?. press n to skip", chars);
+    let userInput5 = promptFor("Which date of birth would you like to select?. press n to skip ", chars);
+
+}
+
+
+function searchByMultipleTraits(people, userInput,userInput2,userInput3,userInput4,userInput5){
     
+let narrowedSearch = people.filter(function(el){
+    if (userInput === el.eyeColor || userInput === "n"){
+        return true;
+    }
+}
+)?.filter(function(el){
+    if (userInput2 === el.gender || userInput2 === "n"){
+        return true;
+    }
+}
+)?.filter(function(el){
+    if (userInput3 === el.height || userInput3 === "n"){
+        return true;    }
+}
+)?.filter(function(el){
+    if (userInput4 === el.weight || userInput4 === "n"){
+        return true;
+    }
+}
+)?.filter(function(el){
+    if (userInput5 === el.dob|| userInput5 === "n"){
+        return true;
+    }
+}
+)
+return narrowedSearch
 }
