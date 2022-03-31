@@ -108,29 +108,26 @@ function mainMenu(person, people) {
             displayPeople(personFamily);
             break;
         case "descendants":
-            function findPersonDescendants(person,people){
-                let array=[person]
-                let subArray=people.parents
-                if (person.id===people.parents[0] || personDescendants===people.parents[1])
-                    for (let i = 0; i < subArray.length; i++)
-                        if (el.parents[i] === person.id)
-                        return array;
-                    
-                    
-                        array=[person];
-                        if(subArray.length===0){
-                            return array;
-                        }
-                        for(let i=0; i < subArray.length; i++){
-                            array=array.concat(
-                                findPersonDescendants(subArray[i])
-                            )
-                        }
-                    return array
+            function findPersonDescendants(person, people){
+                let findkids = people.filter(function(el){
+                let subArray = el.parents;
+                for (let i = 0; i < subArray.length; i++){
+                    if (el.parents[i] === person.id)
+                    return true;
+                } 
+                let findGrandKids = people.filter(function(el){
+                    for (let i = 0; i < subArray.length; i++){
+                        if (findKids[0].id === el.parents[i])
+                        return true;
+                    } 
                 }
-            
+                ) 
+                })
+                return findGrandKids
+            }
                 
-            
+            let descendantsResults = findPersonDescendants(person[0], people)
+            displayPeople(descendantsResults)
                 
 
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -375,3 +372,23 @@ function searchByMultipleTraits(people){
     return narrowedSearch
     }
 
+    function findPersonDescendants(person,people){
+        let array=[person]
+        let subArray=people.parents
+        if (person.id===people.parents[0] || personDescendants===people.parents[1])
+            for (let i = 0; i < subArray.length; i++)
+                if (el.parents[i] === person.id)
+                return array;
+            
+            
+                array=[person];
+                if(subArray.length===0){
+                    return array;
+                }
+                for(let i=0; i < subArray.length; i++){
+                    array=array.concat(
+                        findPersonDescendants(subArray[i])
+                    )
+                }
+            return array
+        }
