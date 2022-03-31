@@ -31,7 +31,7 @@ function app(people) {
         case "no":
             let multiResult =  promptFor("Would you like to search by multiple traits? Press (yes) or (no) for single trait", yesNo);
             if (multiResult === 'yes'){
-                let searchResults = searchByMultipleTraits(people)
+                searchResults = searchByMultipleTraits(people)
             }
             else if(multiResult === 'no')
                 searchByTrait(people);
@@ -108,13 +108,29 @@ function mainMenu(person, people) {
             displayPeople(personFamily);
             break;
         case "descendants":
-            function findPersonDescendants(person, people){
-                let personOffspring=people.filter(function(el){
-                    if (el.parents[0]===person.id || el.parents[1]===person.id)
-                    return true
-                })
-                return personOffspring
-            }
+            function findPersonDescendants(person,people){
+                let array=[person]
+                let subArray=people.parents
+                if (person.id===people.parents[0] || personDescendants===people.parents[1])
+                    for (let i = 0; i < subArray.length; i++)
+                        if (el.parents[i] === person.id)
+                        return array;
+                    
+                    
+                        array=[person];
+                        if(subArray.length===0){
+                            return array;
+                        }
+                        for(let i=0; i < subArray.length; i++){
+                            array=array.concat(
+                                findPersonDescendants(subArray[i])
+                            )
+                        }
+                    return array
+                }
+            
+                
+            
                 
 
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -131,9 +147,11 @@ function mainMenu(person, people) {
             return;
         default:
             // Prompt user again. Another instance of recursion
-            return mainMenu(person, people);
-    }
-}
+           return mainMenu(person, people);
+        }
+    }   
+
+
 // End of mainMenu()
 
 /**
@@ -323,7 +341,8 @@ function searchByMultipleTraits(people){
     let userInput3 = promptFor("What height would you like? Press 'n' to skip: ",chars)
     let intUserInput = parseInt(userInput3)
     let userInput4 = promptFor("What weight would you like? Press 'n' to skip:",chars)
-    let userInput5 = promptFor("What date of birth would you like? Press 'n' to skip:",chars)
+    let intUserInput2= parseInt(userInput4)
+    let userInput5 = promptFor("What kind of occupation would you like? Press 'n' to skip:",chars)
     let narrowedSearch = people.filter(function(el){
       
         if (userInput === el.gender || userInput === "n"){
@@ -342,12 +361,12 @@ function searchByMultipleTraits(people){
         }
     }
     )?.filter(function(el){
-        if (userInput4 === el.weight || userInput4 === "n"){
+        if (intUserInput2 === el.weight || userInput4 === "n"){
             return true;
         }
     }
     )?.filter(function(el){
-        if (userInput5 === el.dob|| userInput5 === "n"){
+        if (userInput5 === el.occupation|| userInput5 === "n"){
             return true;
         }
     }
