@@ -81,6 +81,9 @@ function mainMenu(person, people) {
             function findPersonFamily(person, people){
         
                 let personRelated= people.filter(function(el){
+                    if (el.id === person.id){
+                        return false;
+                    }
                     if (el.id===person.currentSpouse){
                         return true;
                     }
@@ -135,7 +138,7 @@ function mainMenu(person, people) {
 
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
-            let personDescendants = findPersonDescendants(person[0], people);
+            let personDescendants = recursiveFindSiblings(person[0], people);
             displayPeople(personDescendants);
             break;
         case "restart":
@@ -266,8 +269,7 @@ function chars(input) {
 
 }
 
-/*the rooms are about to close but but I put this down just to get a visualization.  I think our end 
-funtion might look someyhing like this once we got trait and traitValue passed in as user imput
+
 */
 
 function searchByTrait (people){
@@ -385,3 +387,24 @@ return narrowedSearch
 
 
 
+function recursiveFindSiblings(person, people, array= []){
+    let recurseDescendants = people.filter(function(el){
+        let subArray = el.parents;
+        array = [people];
+    
+        if (subArray.length === 0 || person.id === el.id) {
+            return false;
+        }
+    
+        for (let i = 0; i < subArray.length; i++){
+            if (el.parents[i] === person.parents[0] || el.parents[i]===person.parents[1]){
+                return true;
+            }
+                //recursiveFindSubsidiaries(person[0], subArray[i])
+            
+        }
+        
+    })
+    return recurseDescendants;
+}
+ 
