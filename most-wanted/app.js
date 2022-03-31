@@ -31,7 +31,7 @@ function app(people) {
         case "no":
             let multiResult =  promptFor("Would you like to search by multiple traits? Press (yes) or (no) for single trait", yesNo);
             if (multiResult === 'yes'){
-                searchByMultipleTraits(people)
+                let searchResults = searchByMultipleTraits(people)
             }
             else if(multiResult === 'no')
                 searchByTrait(people);
@@ -56,7 +56,9 @@ function app(people) {
  */
 function mainMenu(person, people) {
     // A check to verify a person was found via searchByName() or searchByTrait()
-    if (!person[0]) {
+    
+
+    if (!person[0]){
         alert("Could not find that individual.");
         // Restarts app() from the very beginning
         return app(people);
@@ -300,17 +302,7 @@ function searchByTrait (people){
             let weightSearch = searchByWeight(people)
             displayPeople(weightSearch);
             break;
-        case "e": 
-            function searchByMultipleTraits(people){
-            let weightSearch = people.filter(function(el){
-                if (el.weight === traitValue){
-                return true;
-             } })
-             return weightSearch;
-            }
-            let multiSearch = searchByMultipleTraits(people)
-            displayPeople(multiSearch);
-            break;
+       
     
     
 
@@ -323,48 +315,44 @@ function searchByTrait (people){
 }
 
  
-       
-function multiTraitPrompt(){
-    let userInput = promptFor("Which gender would you like to select?  press enter to skip", chars);
-    let userInput2 = promptFor("Which eye color would you like to select? press n to skip. ", chars);
-    let userInput3 = promptFor("Which weight would you like to select?. press n to skip", chars);
-    let userInput4 = promptFor("Which height would you like to select?. press n to skip", chars);
-    let userInput5 = promptFor("Which date of birth would you like to select?. press n to skip ", chars);
-
-}
-
-
-function searchByMultipleTraits(people, userInput,userInput2,userInput3,userInput4,userInput5){
-    
-let narrowedSearch = people.filter(function(el){
-    if (userInput === el.eyeColor || userInput === "n"){
-        return true;
-    }
-}
-)?.filter(function(el){
-    if (userInput2 === el.gender || userInput2 === "n"){
-        return true;
-    }
-}
-)?.filter(function(el){
-    if (userInput3 === el.height || userInput3 === "n"){
-        return true;    }
-}
-)?.filter(function(el){
-    if (userInput4 === el.weight || userInput4 === "n"){
-        return true;
-    }
-}
-)?.filter(function(el){
-    if (userInput5 === el.dob|| userInput5 === "n"){
-        return true;
-    }
-}
-)
-return narrowedSearch
-}
-
-
-
-
+  
  
+function searchByMultipleTraits(people){
+    let userInput =  promptFor("What gender would you like? Press 'n' to skip: ",chars)
+    let userInput2 = promptFor("What eye color would you like? Press 'n' to skip: ",chars)
+    let userInput3 = promptFor("What height would you like? Press 'n' to skip: ",chars)
+    let intUserInput = parseInt(userInput3)
+    let userInput4 = promptFor("What weight would you like? Press 'n' to skip:",chars)
+    let userInput5 = promptFor("What date of birth would you like? Press 'n' to skip:",chars)
+    let narrowedSearch = people.filter(function(el){
+      
+        if (userInput === el.gender || userInput === "n"){
+            return true;
+        }
+    }
+    )?.filter(function(el){
+      
+        if (userInput2 === el.eyeColor || userInput2 === "n"){
+            return true;
+        }
+    }
+    )?.filter(function(el){
+        if (intUserInput === el.height || userInput3 === "n"){
+            return true;    
+        }
+    }
+    )?.filter(function(el){
+        if (userInput4 === el.weight || userInput4 === "n"){
+            return true;
+        }
+    }
+    )?.filter(function(el){
+        if (userInput5 === el.dob|| userInput5 === "n"){
+            return true;
+        }
+    }
+    )
+
+    return narrowedSearch
+    }
+
