@@ -1,6 +1,7 @@
 /*
     Author: devCodeCamp
     Description: Most Wanted Starter Code
+    Chris Creamer && Codi Kingsbury
 */
 //////////////////////////////////////////* Beginning Of Starter Code *//////////////////////////////////////////
 
@@ -56,8 +57,6 @@ function app(people) {
  */
 function mainMenu(person, people) {
     // A check to verify a person was found via searchByName() or searchByTrait()
-    
-
     if (!person[0]){
         alert("Could not find that individual.");
         // Restarts app() from the very beginning
@@ -68,87 +67,19 @@ function mainMenu(person, people) {
     );
     switch (displayOption) {
         case "info":
-            function findPersonInfo(person){
-            return person; 
-            }
             let personInfo = findPersonInfo(person[0]);
             displayPerson(personInfo);
             break;
         case "family":
-            function recursiveFindFamily(person, people, subArray= []){
-                let recurseFamily = people.filter(function(el){
-                    let subArray = el.parents;
-                    for (let i = 0; i < person.parents.length; i++){    
-                        if (el.id === person.parents[i])
-                        return true;
-
-                    }
-                    if (el.id === person.currentSpouse){
-                        return true;
-                    }
-                    let index = person.parents.length
-                    for (let i = 0; i < subArray.length; i++){
-                        if (el.parents[i] === person.parents[index-1] ){
-                            index--
-                            return true;
-                            
-                        }       
-                    }
-                    for (let i = 0; i < subArray.length; i++){
-                        if (el.parents[i] === person.id)
-                        return true;
-                    }    
-                })
-                return recurseFamily;
-            }
-               
-
-
-            //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
-            // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = recursiveFindFamily(person[0], people);
             displayPeopleRelation(personFamily, person[0]);
             break;
         case "descendants":
-            function findPersonDescendants(person, people){
-                let findKids = people.filter(function(el){
-                let subArray = el.parents;
-                for (let i = 0; i < subArray.length; i++){
-                    if (el.parents[i] === person.id)
-                    return true;
-                } 
-                }
-                ) 
-                return findKids
-                }
-            function findGrandKids (kids, people){
-                let finalArray =[]
-                let z = (kids.length)
-                while (z > 0){
-                let finddescendants = people.filter(function(el){
-                let subArray = el.parents;
-                    for (let i = 0; i < subArray.length; i++){
-                        if (kids[z-1].id === el.parents[i]){
-                            return true
-                        }    
-                    }
-                })
-                z--;
-                finalArray = finalArray.concat(finddescendants)
-                }
-                  return finalArray
-                }    
             let descendantsSearch = findPersonDescendants(person[0], people)
             let grandKids = findGrandKids(descendantsSearch, people)
-            alert ("Here are their descendants.  The first screen is their children (if applicable) and the second screen is their grandchildren (if applicable)")
+            alert (`Here are the descendants of ${person[0].firstName} ${person[0].lastName} The first screen displays their children (if applicable) and the second screen displays their grandchildren (if applicable)`)
             displayPeople(descendantsSearch)
             displayPeople(grandKids)
-                
-
-            //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
-            // HINT: Review recursion lecture + demo for bonus user story
-           // let personDescendants = findPersonDescendants(person[0], people);
-            //displayPeople(personDescendants);
             break;
         case "restart":
             // Restart app() from the very beginning
@@ -162,9 +93,6 @@ function mainMenu(person, people) {
            return mainMenu(person, people);
             }
         }
-    
-
-
 // End of mainMenu()
 
 /**
@@ -196,7 +124,7 @@ function searchByName(people) {
  * @param {Array} people        A collection of person objects.
  */
 
- function displayPeople(people) {
+function displayPeople(people) {
     alert(
         people
             .map(function (person) {
@@ -210,29 +138,27 @@ function displayPeopleRelation(people, object) {
         people
             .map(function (person) {
                 if (person.id === object.currentSpouse){
-                    return `${person.firstName} ${person.lastName} Spouse `;
+                    return `${person.firstName} ${person.lastName} : Spouse `;
                 } 
                 let subArray3 = person.parents;
                 for (let i = 0; i < subArray3.length; i++){
                     if (person.parents[i] === object.id){
-                        return `${person.firstName} ${person.lastName} Child `;
+                        return `${person.firstName} ${person.lastName} : Child `;
                     }       
                 } 
                 let index = person.parents.length
                 let subArray = person.parents;
                 for (let i = 0; i < subArray.length; i++){
                     if (person.parents[i] === object.parents[index-1]){
-                        return `${person.firstName} ${person.lastName} Sibling `;
+                        return `${person.firstName} ${person.lastName} : Sibling `;
                     }       
                 } 
                 let subArray2 = person.parents;
                 for (let i = 0; i < subArray2.length; i++){
                     if (person.id === object.parents[i]){
-                        return `${person.firstName} ${person.lastName} Parent `;
-                    }    
-                 
+                        return `${person.firstName} ${person.lastName} : Parent `;
+                    }         
             } 
-                
             })
             .join("\n")
     );
@@ -302,21 +228,9 @@ function chars(input) {
 // End of chars()
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
-// Any additional functions can be written below this line 👇. Happy Coding! 😁
-/*function searchByTrait(people){
-
-    let traitValue = promptFor("What is the person's last name?", chars);
-    let byTrait = people.map(function(el){
-        if( el.firstName === traitValue)
-        return el.firstName;
-    })
-
-    return byTrait
-
-}
-
-
-*/
+function findPersonInfo(person){
+    return person; 
+    }
 
 function searchByTrait (people){
     let traitChoice = promptFor("Which trait would you like to search by? (a) Gender (b) Eye Color (c) Height (cm) (d) Weight (lbs) (e) Search by multiple traits ", chars)
@@ -366,25 +280,12 @@ function searchByTrait (people){
             }
             let weightSearch = searchByWeight(people)
             displayPeople(weightSearch);
-            break;
-       
-    
-    
-
-  
+            break;  
 }
-
-        
-
-
 }
-
- 
-  
- 
 function searchByMultipleTraits(people){
-    let userInput =  promptFor("What gender would you like? Press 'n' to skip: ",chars)
-    let userInput2 = promptFor("What eye color would you like? Press 'n' to skip: ",chars)
+    let userInput =  promptFor("What gender would you like to search by? Choose: male or female. Press 'n' to skip: ",chars)
+    let userInput2 = promptFor("What eye color would you like to search by? Choose: blue, black, brown. Press 'n' to skip: ",chars)
     let userInput3 = promptFor("What height would you like? Press 'n' to skip: ",chars)
     let intUserInput = parseInt(userInput3)
     let userInput4 = promptFor("What weight would you like? Press 'n' to skip:",chars)
@@ -421,24 +322,59 @@ function searchByMultipleTraits(people){
 
     return narrowedSearch
     }
-
-    function findPersonDescendants(person,people){
-        let array=[person]
-        let subArray=people.parents
-        if (person.id===people.parents[0] || personDescendants===people.parents[1])
-            for (let i = 0; i < subArray.length; i++)
-                if (el.parents[i] === person.id)
-                return array;
-            
-            
-                array=[person];
-                if(subArray.length===0){
-                    return array;
-                }
-                for(let i=0; i < subArray.length; i++){
-                    array=array.concat(
-                        findPersonDescendants(subArray[i])
-                    )
-                }
-            return array
+function findPersonDescendants(person, people){
+    let findKids = people.filter(function(el){
+    let subArray = el.parents;
+    for (let i = 0; i < subArray.length; i++){
+        if (el.parents[i] === person.id)
+        return true;
+    } 
+    }
+    ) 
+    return findKids
+    }
+function findGrandKids (kids, people){
+    let finalArray =[]
+    let z = (kids.length)
+    while (z > 0){
+    let finddescendants = people.filter(function(el){
+    let subArray = el.parents;
+        for (let i = 0; i < subArray.length; i++){
+            if (kids[z-1].id === el.parents[i]){
+                return true
+            }    
         }
+    })
+    z--;
+    finalArray = finalArray.concat(finddescendants)
+    }
+        return finalArray
+    }  
+function recursiveFindFamily(person, people, subArray= []){
+    let recurseFamily = people.filter(function(el){
+        let subArray = el.parents;
+        if (person.id === el.id){
+            return false;
+        }
+        for (let i = 0; i < person.parents.length; i++){    
+            if (el.id === person.parents[i])
+            return true;
+
+        }
+        if (el.id === person.currentSpouse){
+            return true;
+        }
+        let index = person.parents.length
+        for (let i = 0; i < subArray.length; i++){
+            if (el.parents[i] === person.parents[index-1] ){
+                index--
+                return true;    
+            }       
+        }
+        for (let i = 0; i < subArray.length; i++){
+            if (el.parents[i] === person.id)
+            return true;
+        }    
+    })
+    return recurseFamily;
+}
