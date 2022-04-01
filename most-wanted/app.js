@@ -109,31 +109,44 @@ function mainMenu(person, people) {
             break;
         case "descendants":
             function findPersonDescendants(person, people){
-                let findkids = people.filter(function(el){
+                let findKids = people.filter(function(el){
                 let subArray = el.parents;
                 for (let i = 0; i < subArray.length; i++){
                     if (el.parents[i] === person.id)
                     return true;
                 } 
-                let findGrandKids = people.filter(function(el){
-                    for (let i = 0; i < subArray.length; i++){
-                        if (findKids[0].id === el.parents[i])
-                        return true;
-                    } 
                 }
                 ) 
+                return findKids
+                }
+            function findGrandKids (kids, people){
+                let finalArray =[]
+                let z = (kids.length)
+                while (z > 0){
+                let finddescendants = people.filter(function(el){
+                let subArray = el.parents;
+                    for (let i = 0; i < subArray.length; i++){
+                        if (kids[z-1].id === el.parents[i]){
+                            return true
+                        }    
+                    }
                 })
-                return findGrandKids
-            }
-                
-            let descendantsResults = findPersonDescendants(person[0], people)
-            displayPeople(descendantsResults)
+                z--;
+                finalArray = finalArray.concat(finddescendants)
+                }
+                  return finalArray
+                }    
+            let descendantsSearch = findPersonDescendants(person[0], people)
+            let grandKids = findGrandKids(descendantsSearch, people)
+            alert ("Here are their descendants.  The first screen is their children (if applicable) and the second screen is their grandchildren (if applicable)")
+            displayPeople(descendantsSearch)
+            displayPeople(grandKids)
                 
 
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
-            let personDescendants = findPersonDescendants(person[0], people);
-            displayPeople(personDescendants);
+           // let personDescendants = findPersonDescendants(person[0], people);
+            //displayPeople(personDescendants);
             break;
         case "restart":
             // Restart app() from the very beginning
@@ -145,8 +158,9 @@ function mainMenu(person, people) {
         default:
             // Prompt user again. Another instance of recursion
            return mainMenu(person, people);
+            }
         }
-    }   
+    
 
 
 // End of mainMenu()
