@@ -105,7 +105,7 @@ function mainMenu(person, people) {
             //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = recursiveFindFamily(person[0], people);
-            displayPeople(personFamily);
+            displayPeopleRelation(personFamily, person[0]);
             break;
         case "descendants":
             function findPersonDescendants(person, people){
@@ -139,8 +139,8 @@ function mainMenu(person, people) {
             let descendantsSearch = findPersonDescendants(person[0], people)
             let grandKids = findGrandKids(descendantsSearch, people)
             alert ("Here are their descendants.  The first screen is their children (if applicable) and the second screen is their grandchildren (if applicable)")
-            displayPeople(descendantsSearch)
-            displayPeople(grandKids)
+            displayPeopleRelation(descendantsSearch, person[0])
+            displayPeopleRelation(grandKids, person[0])
                 
 
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -193,7 +193,8 @@ function searchByName(people) {
  * to the user in the form of an alert().
  * @param {Array} people        A collection of person objects.
  */
-function displayPeople(people) {
+
+ function displayPeople(people) {
     alert(
         people
             .map(function (person) {
@@ -202,6 +203,36 @@ function displayPeople(people) {
             .join("\n")
     );
 }
+function displayPeopleRelation(people, object) {
+    alert(
+        people
+            .map(function (person) {
+                let subArray3 = person.parents;
+                for (let i = 0; i < subArray3.length; i++){
+                    if (person.parents[i] === object.id){
+                        return `${person.firstName} ${person.lastName} Child `;
+                    }       
+                } 
+                if (person.id === object.currentSpouse){
+                    return `${person.firstName} ${person.lastName} Spouse `;
+                }
+                let subArray = person.parents;
+                for (let i = 0; i < subArray.length; i++){
+                    if (el.parents[i] === person.parents[0] || el.parents[i]===person.parents[1]){
+                        return `${person.firstName} ${person.lastName} Sibling `;
+                    }       
+                } 
+                let subArray2 = person.parents;
+                for (let i = 0; i < subArray2.length; i++){
+                    if (person.id === object.parents[i]){
+                        return `${person.firstName} ${person.lastName} Parent `;
+                    }       
+                } 
+            })
+            .join("\n")
+    );
+}
+
 // End of displayPeople()
 
 /**
